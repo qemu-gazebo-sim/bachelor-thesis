@@ -1,0 +1,146 @@
+% ------------------------------------------------------------
+% TEMPLATE
+% ------------------------------------------------------------
+\documentclass[
+	% -- opções da classe memoir --
+	12pt,				% tamanho da fonte
+	openright,			% para impressão em recto e verso. Oposto a oneside
+	a4paper,			% tamanho do papel.
+        sumario=tradicional,
+	% -- opções do pacote babel --
+	french,				% idioma adicional para hifenização
+	spanish,			% idioma adicional para hifenização
+	brazil,				% o último idioma é o principal do documento
+        english			% idioma adicional para hifenização
+	]{../template/abntex2}
+
+% ------------------------------------------------------------
+% PACKAGE
+% ------------------------------------------------------------ 
+\usepackage{lmodern}			% Usa a fonte Latin Modern			
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{color}				% Controle das cores
+\usepackage{graphicx}			% Inclusão de gráficos
+\usepackage{microtype} 			% para melhorias de justificação
+		
+% Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
+\usepackage{lipsum}				% para geração de dummy text
+
+% Pacotes de citações
+\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+%\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+\usepackage[num]{abntex2cite}
+\usepackage{cite}
+
+% Pacotes Locais
+\usepackage{subfiles}
+\usepackage{afterpage}
+
+% ------------------------------------------------------------
+% PACKAGES CONFIGURATION
+% ------------------------------------------------------------ 
+\input{utils/package_config}
+
+% compila o indice
+\makeindex
+% ------------------------------------------------------------
+% DOCUMENT COMMANDS
+% ------------------------------------------------------------
+\input{utils/commands}
+
+% ------------------------------------------------------------
+% DOCUMENT BEGIN
+% ------------------------------------------------------------
+\begin{document}
+% Seleciona o idioma do documento (conforme pacotes do babel)
+\selectlanguage{english}
+%\selectlanguage{brazil}
+
+% Retira espaço extra obsoleto entre as frases.
+\frenchspacing 
+
+% ------------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ------------------------------------------------------------
+\imprimircapa
+
+\imprimirfalsafolhaderosto
+
+\imprimirfolhaderosto*
+
+\subfile{preliminaries/pre_report}
+
+% ------------------------------------------------------------
+% LISTS
+% ------------------------------------------------------------
+
+\input{utils/default_list}
+
+\subfile{preliminaries/acronyms_symbols}
+
+% ------------------------------------------------------------
+% CONTENTS
+% ------------------------------------------------------------
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents
+\cleardoublepage
+
+% ----------------------------------------------------------
+% PARTS ELEMENTS
+% ----------------------------------------------------------
+\textual
+\subfile{parts/introduction}
+
+\subfile{parts/microcontroller_simulation}
+
+\subfile{parts/environment_simulation}
+
+\subfile{parts/simulations_integration}
+\phantompart
+\subfile{parts/conclusion}
+
+% ----------------------------------------------------------
+% ELEMENTOS PÓS-TEXTUAIS
+% ----------------------------------------------------------
+\postextual
+
+% ----------------------------------------------------------
+% REFERENCES
+% ----------------------------------------------------------
+% --- TITULOS DO SUMÁRIOS
+%\blinddocument
+
+% --- ABNT (requer ABNTeX 2) ---
+%	http://www.ctan.org/tex-archive/macros/latex/contrib/abntex2
+%\bibliographystyle{abntex2-num}
+\bibliography{bibliography}
+
+% ----------------------------------------------------------
+% GLOSSARY
+% ----------------------------------------------------------
+
+% Consulte o manual da classe abntex2 para orientações sobre o glossário.
+%\glossary
+
+% ----------------------------------------------------------
+% APPENDICES 
+% ----------------------------------------------------------
+\subfile{finals/appendices}
+
+% ----------------------------------------------------------
+% ATTACHMENTS
+% ----------------------------------------------------------
+\subfile{finals/attachments}
+
+%-----------------------------------------------------------
+% INDICE REMISSIVO
+%-----------------------------------------------------------
+\phantompart
+\printindex
+
+% ------------------------------------------------------------
+% DOCUMENT END
+% ------------------------------------------------------------
+\end{document}

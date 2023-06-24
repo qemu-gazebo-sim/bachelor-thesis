@@ -1,0 +1,48 @@
+% Configurações do pacote backref
+\renewcommand{\backrefpagesname}{Citado na(s) página(s):~}
+\renewcommand{\backref}{}
+% Define os textos da citação
+\renewcommand*{\backrefalt}[4]{
+	\ifcase #1 %
+		Nenhuma citação no texto.%
+	\or
+		Citado na página #2.%
+	\else
+		Citado #1 vezes nas páginas #2.%
+	\fi}%
+
+% Possibilita criação de Quadros e Lista de quadros.
+% Ver https://github.com/abntex/abntex2/issues/176
+\newcommand{\quadroname}{Quadro}
+\newcommand{\listofquadrosname}{Lista de quadros}
+
+\renewcommand{\cftquadroname}{\quadroname\space} 
+\renewcommand*{\cftquadroaftersnum}{\hfill--\hfill}
+
+\newcommand{\partNoPageBreak}[1]{%
+  \bgroup
+  \let\newpage\relax
+  \part{#1}
+  \egroup
+}
+
+\newcommand{\chapterNoPageBreak}[1]{%
+  \bgroup
+  \let\newpage\relax
+  \chapter{#1}
+  \egroup
+}
+
+\newcommand{\chapterNoPageBreakStart}[1]{%
+  \bgroup
+  \let\newpage\relax
+  \chapter*{#1}
+  \egroup
+}
+
+\newcommand{\partapendicesNoPageBreak}{%
+  \bgroup
+  \let\newpage\relax
+  \partapendices
+  \egroup
+}
