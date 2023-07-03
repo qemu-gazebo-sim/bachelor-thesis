@@ -3,44 +3,14 @@
 
 \begin{document}
 
-% Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
+With the exponential increase in memory and processing capacity of embedded devices, the complexity of algorithms and applications has significantly grown. However, as this complexity increases, so does the demand for testing. Unfortunately, the methods used to test these devices have not kept pace with this exponential growth.
 
-Este documento e seu código-fonte são exemplos de referência de uso da classe
-\textsf{abntex2} e do pacote \textsf{abntex2cite}. O documento 
-exemplifica a elaboração de trabalho acadêmico (tese, dissertação e outros do
-gênero) produzido conforme a ABNT NBR 14724:2011 \emph{Informação e documentação
-- Trabalhos acadêmicos - Apresentação}.
+In recent years, we have witnessed serious flaws in embedded software that have resulted in significant accidents, such as plane crashes involving Boeing aircraft \cite{acidente_boing_23} and pedestrian accidents caused by Uber autonomous vehicles \cite{acidente_uber_23}. These incidents highlight the fact that even market leaders in standalone embedded devices still suffer from firmware failures due to a lack of proper testing.
 
-A expressão ``Modelo Canônico'' é utilizada para indicar que \abnTeX\ não é
-modelo específico de nenhuma universidade ou instituição, mas que implementa tão
-somente os requisitos das normas da ABNT. Uma lista completa das normas
-observadas pelo \abnTeX\ é apresentada em \citeonline{abntex2classe}.
+To address this problem, the most common method used is to utilize hardware prototyping boards, such as Arduino \cite{Arduino_23}, which are becoming increasingly popular. However, only a small portion of professional micro-controller development at a lower level of abstraction can be considered valid and tested. This approach does not provide an efficient solution to the problem.
 
-Sinta-se convidado a participar do projeto \abnTeX! Acesse o site do projeto em
-\url{http://www.abntex.net.br/}. Também fique livre para conhecer,
-estudar, alterar e redistribuir o trabalho do \abnTeX, desde que os arquivos
-modificados tenham seus nomes alterados e que os créditos sejam dados aos
-autores originais, nos termos da ``The \LaTeX\ Project Public
-License''\footnote{\url{http://www.latex-project.org/lppl.txt}}.
+While not yet common, there are tools available today that allow for the simulation of micro-controllers without the need for physical hardware. However, these tools are quite specific and lack adequate integration with the external environment to simulate thermal events, for example. Conversely, there are excellent tools available for simulating the physical world and its numerous natural phenomena.
 
-Encorajamos que sejam realizadas customizações específicas deste exemplo para
-universidades e outras instituições --- como capas, folha de aprovação, etc.
-Porém, recomendamos que ao invés de se alterar diretamente os arquivos do
-\abnTeX, distribua-se arquivos com as respectivas customizações.
-Isso permite que futuras versões do \abnTeX~não se tornem automaticamente
-incompatíveis com as customizações promovidas. Consulte
-\citeonline{abntex2-wiki-como-customizar} para mais informações.
-
-Este documento deve ser utilizado como complemento dos manuais do \abnTeX\ 
-\cite{abntex2classe,abntex2cite,abntex2cite-alf} e da classe \textsf{memoir}
-\cite{memoir}. 
-
-Esperamos, sinceramente, que o \abnTeX\ aprimore a qualidade do trabalho que
-você produzirá, de modo que o principal esforço seja concentrado no principal:
-na contribuição científica.
-
-Equipe \abnTeX 
-
-Lauro César Araujo
+The biggest challenge lies in the lack of a tool that integrates these important simulation tools. If such tools were more readily available, we could explore a world of possibilities to innovate and create a new way of simulating embedded devices. These simulations would require testing and validation with stimuli from the physical world and natural phenomena to ensure they can be used in production without the risk of causing accidents.
 
 \end{document}

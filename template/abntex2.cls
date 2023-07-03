@@ -1037,8 +1037,8 @@
 % ---
 % Impressão da Capa
 \newcommand{\imprimircapa}{%
-  \begin{center}%
-    %\center
+  \begin{capa}%
+    \center
     \ABNTEXchapterfont\large\imprimirautor
 
     \vfill
@@ -1050,52 +1050,11 @@
     \large\imprimirlocal
 
     \large\imprimirdata
+    
     \vspace*{1cm}
-  \end{center}
+  \end{capa}
 }
 % ---
-
-% ---
-% Falsa Folha de rosto
-\newenvironment{falsafolhaderosto}[1][\folhaderostoname]{\clearpage\PRIVATEbookmarkthis{#1}}{\cleardoublepage}
-
-% ---
-% Conteudo padrao da Falsa Folha de Rosto
-\makeatletter
-\newcommand{\falsafolhaderostocontent}{
-  \begin{center}
-
-    %\vspace*{1cm}
-    {\ABNTEXchapterfont\large\imprimirautor}
-	
-    \vspace*{\fill}\vspace*{\fill}
-    \begin{center}
-      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
-    \end{center}
-    \vspace*{\fill}
-	
-    \abntex@ifnotempty{\imprimirpreambulo}{%
-      \hspace{.45\textwidth}
-      \begin{minipage}{.5\textwidth}
-      	\SingleSpacing
-         \imprimirpreambulo
-       \end{minipage}%
-       \vspace*{\fill}
-    }%
-
-    {\large\imprimirlocal}
-    \par
-    {\large\imprimirdata}
-    \vspace*{1cm}
-
-  \end{center}
-}
-\makeatother
-
-\newcommand{\imprimirfalsafolhaderosto}[1]{%
-  \begin{falsafolhaderosto}{#1}
-     \falsafolhaderostocontent
-  \end{falsafolhaderosto}}
   
 % ---
 % Folha de rosto

@@ -1,0 +1,20 @@
+\documentclass[../monografia.tex]{subfiles}
+\graphicspath{ {images/}{../images/}{../../images/} }
+
+\begin{document}
+\part{Requirements Specifications}
+This chapter presents the, functional and non-functional, requirements specifications of the project to be developed. 
+\section{Functional}
+\textbf{Micro-controller Emulation}: The project must be able to run the binary of an embedded system software the same way it would run in a real hardware. Therefore, the emulation of the functionalities and peripherals of the chosen micro-controller is essential.
+
+\textbf{Environment and Robot simulation}: To reproduce how the physical system would respond in reality, it is necessary to have a whole simulated environment where the simulated robot will actuate.
+
+\textbf{Connection Between the Emulation and the Simulation}: Since it is the simulation of a entire embedded system, it is necessary the connection between the hardware emulation and the environment simulation.
+
+\textbf{Embedded System software binary}: To test and validate the project, it is necessary to have a functional software binary to be run by the hardware emulator.
+\textbf{Physical embedded system}: To validate the project, it is essential to have a physical device. With that, it will be possible to see how close from a real system the simulation will get.
+
+\section{Non-Functional}
+\textbf{Simulation Performance}: It is important that the simulation has a good performance, reducing it's delay as maximum as possible.
+
+\end{document}
