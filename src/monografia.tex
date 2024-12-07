@@ -38,10 +38,32 @@
 \usepackage{subfiles}
 \usepackage{afterpage}
 
+\usepackage{wrapfig} % Pacotes para figuras laterais
+\usepackage{booktabs}
+\usepackage{pdfpages}
+\usepackage{listings}
+\usepackage{minted}
+
+\usepackage{color}
+
 % ------------------------------------------------------------
 % PACKAGES CONFIGURATION
 % ------------------------------------------------------------ 
 \input{utils/package_config}
+
+\lstset{
+    language=C++,                 % Set the language to C++
+    basicstyle=\ttfamily,         % Use a monospaced font
+    keywordstyle=\color{blue},    % Color keywords in blue
+    commentstyle=\color{green},   % Color comments in green
+    stringstyle=\color{red},      % Color strings in red
+    numbers=left,                 % Add line numbers on the left
+    numberstyle=\tiny,            % Use a tiny font for line numbers
+    frame=single,                 % Add a simple frame around the code
+    breaklines=true,              % Allow breaking long lines
+    tabsize=4,                    % Set tab width to 4 spaces
+    showstringspaces=false        % Do not show spaces in strings
+}
 
 % compila o indice
 \makeindex
@@ -99,6 +121,8 @@
 
 \subfile{parts/requirements_specification}
 
+\subfile{parts/project_development}
+
 \phantompart
 % \subfile{parts/conclusion}
 
@@ -128,7 +152,7 @@
 % ----------------------------------------------------------
 % APPENDICES 
 % ----------------------------------------------------------
-% \subfile{finals/appendices}
+\subfile{finals/appendices}
 
 % ----------------------------------------------------------
 % ATTACHMENTS

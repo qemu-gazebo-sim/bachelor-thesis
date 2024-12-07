@@ -4,22 +4,34 @@
 \begin{document}
 \part{Methodology}
 
-\chapter{Project Development}
+\chapter{Development Planning}
 
 Using the concepts mentioned on the previous chapter, this project has as a goal the building an embedded system simulator.
 To achieve this objective, the project follows the methodology composed by the following steps:
 
-\section{Chose and emulate the micro-controller}
+\section{Choose and emulate the micro-controller}
 The first step it is chose the micro-controller that will be used. Each kind of micro-controller has it own specificities and characteristics, and it is essential to chose one with the demanded features by the simulated device. After this, using an open source framework, it is fundamental to emulate all the micro-controller essentials functionalities.
 
-\section{Model the environment}
-After emulating the micro-controller that will be used, the whole simulated environment will be made and tested. This step is important to determine how the environment will be and which physical properties it will have. It is important that this environment to be able to be exported to others software that are able to communicate with others via TCP/IP protocols.
+\section{Model the environment and the robot}
+After emulating the micro-controller that will be used, the whole simulated environment and the robot will be made and tested. This step is important to determine how the environment will be and which physical properties it will have. It is important that this environment and robot to be able to be exported to others software and keep the same properties. 
 
-\section{Run the environment}
+\section{Run the environment and the robot}
 With the modelled environment in hands, it is time to run it. In this stage, it will test if the simulated robot and the environment are working as they should. At this part, the topic structure will be defined, and will be tested if the simulated robot is publishing and subscribing to them.
 
 \section{Interconnect the emulation and simulation}
 With both the emulation and the simulation made, it is time to connect them. To do this, all the concepts of interconnection mentioned on the last chapter will be used. Using TCP/IP sockets, the emulated hardware and the simulated environment will share topics to published and subscribed from both sides. 
+
+\section{Prototype an electronic interface between the micro-controller and the robot}
+
+After choosing the microcontroller and selecting which pin from the microcontroller to use, it is essential to create a simple electronic case to gather all the electronic signal from the microcontroller and send them correctly to the robot.
+
+\section{Manufacture and test the electronic interface}
+
+After creating the electronic case, it is essential to find a manufacture, send them the project, buy the components and assemble the case. After that, it is important to test everything and check whether it is all working as it should. 
+
+\section{Test development code with the real robot}
+
+After the electronic case is working, it is time to upload the code to the microcontroller and run the program, which was created with the help of the simulation, on the real robot. 
 
 \section{Compare the results with a real device}
 After all the project implementation, it is time to compare the results of the simulation with how the real device works. At this stage, it will see how good  the simulation approached reality and in which points the project should be improved.
