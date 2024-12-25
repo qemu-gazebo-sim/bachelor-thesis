@@ -1,0 +1,53 @@
+\documentclass[../monografia.tex]{subfiles}
+\graphicspath{ {images/}{../images/}{../../images/} }
+
+\begin{document}
+
+\chapter{Final considerations}
+
+\section{Conclusion}
+
+In conclusion, this project represents a important advancement in robotics simulation by successfully integrating a hardware emulator with a fully simulated environment. This achievement not only validated the project's primary objectives, as shown in the section \ref{Section: Objective},  but also underscored its utility and potential applications. During its implementation and testing, the simulator proved its value as a self-validating tool and debugger, particularly when integrated with the Pioneer 2DX system, as described in Section \ref{section: Test Setup}.
+
+Working on this project has been a gratifying experience, culminating in the delivery of an innovative solution. The integration of hardware emulation and simulation stands as a pioneering effort, opening doors for further exploration in this domain. By successfully bridging the gap between these two technologies, this project lays the groundwork for future advancements, encouraging others to delve into the field of robotics simulation.
+
+As the first initiative of its kind, this project serves as inspiration for others to collaborate, innovate, and contribute to the development of new simulators. Such efforts have the potential to drive even greater progress in robotics, fostering creativity and accelerating advancements in the field.
+
+\section{Contributions}
+
+As the conclusion of this work, we successfully integrated QEMU with Gazebo, two completely different technologies. This results demonstrates that it is entirely possible to fully integrate a microcontroller within an emulation environment and opens for diffent types of implementation in the future.
+
+Besides covering the entire scope of the project, it was one of the first open-source initiatives to emulate a wide range of microcontroller peripherals simultaneously, using ROS to make the GPIOs easily readable and writable outside the emulation, like an interface. With this strategy, it has the potential to enable much more scalable projects in the future.
+
+Regarding the test setup of the robot, as described in Section \ref{section: Test Setup}, it was necessary to translate the entire ROS P2OS library, originally designed for use on a computer, to be compatible with a standard microcontroller and arduino IDE. Since no other library is available to perform the same function, this enables the possibility of making it open source and adding future contributions to support the work of other students who wish to use the Pioneer 2DX.
+
+% first integration between qemu and Gazebo
+% First integratioin formal project to use in large scale microcontroller peripherical modification
+% First P2OS library made for arduino IDE
+
+\section{Prospects for Continuity}
+
+As unconvencional and multi area project, there are a plenty of possible improvement in different aspects.
+
+Regarding the microcontroller emulation, it would be nice to add the possibility to emulate peripherals derived from timers, such as PWM, ADC, and several communication protocols. It would also be interesting to build a better architecture in the STM32 QEMU project.
+
+Regarding the environment simulation, it would be interesting to try different types of simulators, such as the CARLA simulator \cite{carla_24}, which offers alternative ways to model and visualize sensors and actuators.
+
+Regarding the integration between the emulation and the simulation, it would be better to use a ROS2 provider instead of ROS Noetic (the last version of ROS1), as ROS1 will reach its end of life around the beginning of 2024 \cite{ros_news_24}. Furthermore, Gazebo Classic, also used in the project, will also reach its end of life next year \cite{gazebo_end_of_life_24}, making it necessary to update. Updating the software versions is extremely important to ensure the use of the safest and most stable version of the product.
+
+Regarding the test setup, it would be beneficial to manufacture the entire PCB using the current available schematic and improve the battery support in the robot, as it is not properly secured at the moment.
+
+% enable people continue working:
+%   - using thing that we have developed
+%   - Improving what we have developed
+% ways to continue developing:
+%   - Adding support for more periféricos
+%   - Migrating the project for ROS2
+%   - Find out a more optimize way to send all data at the same time to gazebo
+%   - Try out another env simulator
+% Ways to Use this project
+%   - Use it to turn easier to integrate an arduino microcontroller with pioneer 2
+% Test Setup:
+% - Manufacture and test the whole PCB with the developed  shemactic
+
+\end{document}

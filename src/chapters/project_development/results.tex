@@ -1,0 +1,58 @@
+\documentclass[../../monografia.tex]{subfiles}
+\graphicspath{ {images/}{../images/}{../../images/} }
+
+\begin{document}
+
+\section{Results}
+
+After completing the project development and documentation, it was possible to validate the project's main goal: ensuring that the simulator behaves exactly like the real robot while running the exact same binaries.
+
+The proof of concept was established through the following tests:
+
+\begin{itemize}
+    \item \textbf{Motor command data verification}
+    \item \textbf{Distance sensor data acquisition verification}
+    \item \textbf{Encoder data verification}
+    \item \textbf{Obstacle avoidance software testing}: A software implementation that enables the robot to avoid obstacles.
+\end{itemize}
+
+Each component of the emulation-simulation connection was tested individually to ensure proper functionality and accuracy. For security reasons, the values published on the simulation's ROS topics were compared with the values transmitted via the ESP32. After these comparisons, the binaries were tested by running them in both the real setup and the simulation, ensuring consistent behavior in both environments.
+
+
+
+\subsection{Motors command validation}
+
+The first test aimed to verify the commands sent to the motors. As detailed in Bluepill Connection\ref{Bluepill Connection}, the command signal was a 3-bit two's complement value. To move forward, the robot could receive values between 1 and 3, while for backward motion, values ranged from -1 to -4.
+
+To validate the motor commands, both the simulation and the real robot were tasked with executing two simple movements: moving forward and backward. The binary test initialized the command at 0, then transitioned to 3, back to -4, and finally returned to 0.
+
+As a first step, the commands published on the ROS topics were compared with those sent by the ESP32 D1 Mini. Subsequently, the simulation's behavior was compared to that of the real robot.
+
+The results showed consistency between the simulation and the real robot. However, due to the limited precision of the 3-bit command signal, the motor transitions were somewhat abrupt and lacked smoothness. For improved performance, a higher precision command range would be recommended to enable smoother motor acceleration and deceleration.
+
+\subsection{Distance sensors validation}
+
+ To verify the functioning of the distance sensors, each sensor was tested individually, followed by a test of all sensors operating simultaneously. Initially, the values read by the ROS topics were compared with those obtained from the ESP to ensure consistency.
+
+Next, a more dynamic test was conducted where the robot was programmed to move forward only when a sensor detected an obstacle. This test was designed to evaluate the responsiveness of the system.
+
+Finally, the simulation results were compared with the real robot's behavior. The real robot responded as expected, validating the accuracy and functionality of the distance sensors.
+
+ \subsection{Encoders validation}
+
+The encoder validation primarily focused on comparing the data received from the simulation with the data obtained from the ESP32. Once the values matched, the encoder functionality was satisfactory. However, it was not possible to perform a comprehensive test of the encoders due to precision differences between the simulation and the physical encoders on the Pioneer 2 robot.
+
+\subsection{Dodge obstacles validation}
+
+After completing the individual component validations, a full robot application was tested: obstacle dodging. Widely used in mobile robotics, this task combines robot control and sensor responsiveness, making it an effective demonstration of the simulator's comprehensive validation.
+
+The developed software employs a finite state machine (FSM) to guide the robot's navigation—a common approach in the field of robotics.
+
+With this software, the project was able to demonstrate practical application in a real-world scenario. Moreover, the simulator served as a valuable tool for testing the obstacle-dodging software before deploying it on the physical robot, further reinforcing the project's goals and purpose.
+
+As anticipated, the simulation produced satisfactory results, with the real robot successfully performing the task as intended.
+
+
+
+\end{document}
+
