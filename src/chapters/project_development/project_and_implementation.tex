@@ -15,13 +15,19 @@ Among the available models, the Blue Pill \cite{BluePill_23} development board w
 
 \subsubsection{Emulating with QEMU}
 
-After selecting the STM32 microcontroller, the QEMU hardware emulator was used to simulate the microcontroller’s environment. A specialized version of QEMU \cite{QEMU_STM32_23}, tailored for STM32 microcontroller emulation, was employed to replicate the functionality of the STM32F103C8T6.
+After selecting the STM32 microcontroller, the QEMU hardware emulator was used to reproduce the microcontroller’s operation. A specialized version of QEMU \cite{QEMU_STM32_23}, tailored for STM32 microcontroller emulation, was employed to replicate the functionality of the STM32F103C8T6.
 
 The primary focus of the emulation was on simulating the GPIO (General-Purpose Input/Output) functions, which is used for interfacing with the sensors and actuators in the robotic system. Initially, efforts were made to emulate other functionalities, such as Pulse Width Modulation (PWM) generation and timers. However, these features did not function as expected during testing.
 
 Despite these challenges, the emulator allowed for the first round of binary testing, enabling verification of GPIO pin value changes, the relationship between memory positions, and overall emulator functionality.
 
-To streamline the execution of QEMU for hardware emulation, a custom bash script, run.sh, was developed. This script automates the configuration and execution of QEMU, ensuring that the appropriate firmware binary is linked and loaded into the emulation environment.
+To streamline the execution of QEMU for hardware emulation, a custom bash script, run.sh, was developed. This script gathered parameters to be able to run the emulation such as:
+
+\begin{itemize}
+    \item \textbf{Link to the embedded software binary}: The used software to be executes by the emulator;
+    \item \textbf{Machine reference}: This version of QEMU has the capability to reproduce different kinds of machines, so it is necessary to specify which one is going be emulated;
+    \item \textbf{TCP/IP Socket}: Initialize and configure a TCP/IP socket.
+\end{itemize}
 
 \subsection{ROS/Gazebo Simulation}
 
@@ -140,36 +146,36 @@ On the other hand, there was no inherent support for ROS on the QEMU side, which
 
 \subsubsection{Adding ROS to QEMU}
 
-One of the initial challenges in integrating ROS with QEMU was the difference in their native programming languages: ROS libraries are primarily written in C++ or Python, whereas QEMU is implemented in C.
+One of the initial tasks in integrating ROS with QEMU was the difference in their native programming languages: ROS libraries are primarily written in C++ or Python, whereas QEMU is implemented in C.
 
 To address this, it was necessary to find a C-based library capable of implementing a ROS node. After conducting research, the cROS library \cite{CROS_23} was identified as a suitable solution. This library provided the functionality needed to create ROS nodes in a C environment. However, integrating this library into QEMU's codebase presented an additional challenge.
 
+To integrate the ROS library in C, all the library files were added to the repository and imported into the main QEMU file. This file, \texttt{vl.c}, contains the implementation of QEMU's main loop. That was made by including the header file \texttt{qom/cros.h}, which provides the implementation of the library and handles all the necessary internal includes. For more information about how the cROS works, it is possible to check the official manual \cite{cros_manual_24} or the source code \cite{CROS_23}.
 
-The integration was achieved by introducing a dedicated thread within QEMU's main loop. This thread was responsible for running the ROS main loop, which instantiated a TCP/IP socket to stablish communication with other nodes. Each node was assigned a callback function, responsible for publishing or subscribing to a topic, enabling interaction between QEMU and the broader ROS ecosystem.
+The integration was achieved by introducing a dedicated thread within QEMU's main loop. This thread was responsible for running the ROS main loop, which linked to a TCP/IP socket to stablish communication with other nodes. Each node was assigned a callback function, responsible for publishing or subscribing to a topic, enabling interaction between QEMU and the broader ROS ecosystem. In the figure \ref{fig: ROS Implementation within STM32 QEMU}, it can be visualized.
 
-In addition to the ROS loop, it was necessary to modify the \texttt{run.sh} script. It was nedded to specify to which port the socket should connect, and therefore, make the correct link with the simulation.
-
-The integration between emulation and simulation was achieved by incorporating a dedicated thread into QEMU's main loop. This thread executed the ROS main loop, which instantiated a TCP/IP socket to establish communication with other ROS nodes. Each node was paired with a callback function, enabling it to publish or subscribe to each topics, enabling interaction between QEMU and the broader ROS ecosystem.
-
-Additionally, modifications were made to the \texttt{run.sh} script to specify the port for socket communication. This configuration ensured the proper connection between the emulation environment and the Gazebo simulation, establishing the link for real-time interaction.
 \begin{figure}[h!]
-    \caption{QEMU with ROS socket}
+    \caption{ROS Implementation within STM32 QEMU}
     \centering
-    \includegraphics[width=16cm]{src/images/ros_socket.png}
-    \label{fig: QEMU with ROS socket}
+    \includegraphics[width=12cm]{diagramas-qemu_ros_init.drawio.png}
+    \label{fig: ROS Implementation within STM32 QEMU}
 \end{figure}
 
+Each callback from a sensor is responsible for reading a value from a ROS topic and writing it in the correct place in memory. For the topic from the motors, the value is read from the memory and it is written in the ROS topics. There is more  detailed information about it in the topic \ref{subsubsection: Complete integration}
+
+The TCP/IP socket is important for making the correct link with the simulation because it connects the ROS provider from outside the QEMU with the ROS provider from inside QEMU. The initial idea of the TCP/IP socket can be visualized in the figure \ref{fig: QEMU with ROS socket initial idea}
+
+\begin{figure}[h!]
+    \caption{QEMU with ROS socket initial idea}
+    \centering
+    \includegraphics[width=16cm]{src/images/ros_socket.png}
+    \label{fig: QEMU with ROS socket initial idea}
+\end{figure}
+
+In addition to the ROS main loop, it was necessary to add to the \texttt{run.sh} script, the TCP/IP socket configuration. With that, this script is able to compile the stm32\_qemu code, initialize the socket, select the binary code from the bluepill folder and execute the whole simulation.
+
 \subsubsection{Complete integration}
-
-After integrating ROS into QEMU's emulation, it was possible to establish full communication between both systems. To achieve this, the following topics were defined:
-
-\begin{itemize}
-    \item \textbf{distance\_sensor\_(1-8)}: Topics responsible for sending the output of the distance sensors. These are published by the Gazebo simulation and subscribed to on the QEMU side.
-    \item \textbf{encoder\_(left/right)}: Topics responsible for sending the encoder output. These are published by the Gazebo simulation and subscribed to on the QEMU side.
-    \item \textbf{motor\_(left/right)}: Topics responsible for sending motor commands. These are published by QEMU and subscribed to on the Gazebo simulation side.
-\end{itemize}
-
-By running both environments with these topic references and establishing connections between the ROS nodes, the systems were able to communicate effectively— emulation sending commands to the simulation and the simulation providing sensor information, completing, finally, the system implementation.
+\label{subsubsection: Complete integration}
 
 \begin{figure}[h!]
     \caption{Emulation and Simulation complete integration}
@@ -178,6 +184,68 @@ By running both environments with these topic references and establishing connec
     \label{fig: Emulation and Simulation complete integration}
 \end{figure}
 
+After integrating ROS into QEMU's emulation, it was possible to establish full communication between both systems. To achieve this, the following topics were defined:
+
+
+\begin{itemize}
+    \item \textbf{distance\_sensor\_(1-8)}: Topics responsible for sending the output of the distance sensors. These are published by the Gazebo simulation and subscribed to on the QEMU side.
+    \item \textbf{encoder\_(left/right)}: Topics responsible for sending the encoder output. These are published by the Gazebo simulation and subscribed to on the QEMU side.
+    \item \textbf{motor\_(left/right)}: Topics responsible for sending motor commands. These are published by QEMU and subscribed to on the Gazebo simulation side.
+\end{itemize}
+
+By running both environments with these topic references and establishing connections between the ROS nodes, the systems were able to communicate effectively— emulation sending commands to the simulation and the simulation providing sensor information, completing, finally, the system implementation. 
+
+In the figure \ref{fig: General topics schema} it is possible to visualize all topics that have been published and subscribed to between the QEMU emulation and the Gazebo simulation. The arrows that are coming out of QEMU mean that it is the one that is publishing data there, and the arrows that are coming in QEMU mean that it has been reading. The same logic is applied to Gazebo.
+
+\begin{figure}[h!]
+    \centering
+    \caption{General topics schema}
+    \includegraphics[width=15cm]{diagramas-general_schema.drawio.png}
+    \label{fig: General topics schema}
+\end{figure}
+
+Within the STM32 QEMU environment, each \textbf{distance\_sensor\_(1-8)} and \textbf{encoder\_(left/right)} has a topic subscription linked to a callback function. Whenever new data are received from the Gazebo simulation, the callback function is triggered, updating the memory location responsible for maintaining the GPIO input state.
+
+For \textbf{motor\_(left/right)}, there are also callback functions. However, instead of writing data to the microcontroller's memory, it reads data from the location responsible for maintaining the GPIO output state. This data is then published on the respective motor topic. The code example \ref{lst:Callback function for motor 1 - From vl.c file} aims to illustrate the process in detail. The function is automatically executed every 100 milliseconds. 
+
+\clearpage
+
+\begin{lstlisting}[
+    language=C++,
+    caption={Callback function for motor 1 - From vl.c file},
+    label={lst:Callback function for motor 1 - From vl.c file},
+]
+static CallbackResponse callback_motor_1(cRosMessage *message, void* data_context){
+    char buf[1024];
+    cRosMessageField *data_field;
+    data_field = cRosMessageGetField(message, "data");
+    uint32_t value, data;
+    cpu_physical_memory_read(
+        GPIOA_BASE_ADDR + 0x0c, 
+        &data, 4
+    );
+    value = (data >> 1) & 0b111;
+    ROS_INFO(
+        node, "Right motor publish value: [%d]\n", 
+        value
+    );
+    data_field->data.as_uint32 = value;
+
+    cRosMessageSetFieldValueString(&data_field, buf);
+
+    return 0;
+}
+\end{lstlisting}
+
+
+In Figure \ref{fig: Callback Memory access example}, the flow of information can be visualized as it moves from the ROS topic to the microcontroller's memory for the \textbf{distance\_sensor\_(1-8)} and \textbf{encoder\_(left/right)} and, subsequently, from the microcontroller's memory back to the ROS topic for the \textbf{motor\_(left/right)}.
+
+\begin{figure}[h!]
+    \centering
+    \caption{Callback memory access example}
+    \includegraphics[width=16cm]{diagramas-uc_memery_read_write.drawio.png}
+    \label{fig: Callback Memory access example}
+\end{figure}
 
 
 % \subsection{Communication between emulation and simulation}
