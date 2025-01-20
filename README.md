@@ -23,10 +23,11 @@
 This bachelor thesis was primarily prepared using [overleaf](https://www.overleaf.com). To view the overleaf version of the bachelor thesis, please click [here](https://www.overleaf.com/read/dvvdcznfvxsr#93ac22).
 
 <p align="center">
-    <a href="https://github.com/qemu-gazebo-sim/bachelors-thesis/blob/master/Monografia.pdf" title="Embedded systems simulator for robotics applications">
-        <img src="https://raw.githubusercontent.com/qemu-gazebo-sim/bachelors-thesis/master/docs/front_view_bt.png" width="400" alt="Embedded systems simulator for robotics applications" title="Embedded systems simulator for robotics applications" />
+    <a href="https://github.com/qemu-gazebo-sim/bachelor-thesis/blob/master/Monografia.pdf" title="Embedded systems simulator for robotics applications">
+        <img src="https://raw.githubusercontent.com/qemu-gazebo-sim/bachelor-thesis/master/docs/front_view_bt.png" width="400" alt="Embedded systems simulator for robotics applications" title="Embedded systems simulator for robotics applications" />
     </a>
 </p>
+
 
 ## :rocket: Implementation
 
